@@ -1,0 +1,11 @@
+Year: 2014
+ADF Statistic: -10.28893261629998
+p-value: 5.737350917059595e-16
+Number of lags used: 48
+Number of observations used: 25136
+Critical Values:
+    1%: -3.959130209706392
+    5%: -3.410664680122383
+    10%: -3.127152870631205
+AIC: 175528.61476538677
+---
