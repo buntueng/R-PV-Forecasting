@@ -17,7 +17,7 @@ df["DateTime"] = pd.to_datetime(df["DateTime"], format='mixed', errors='coerce')
 df = df.set_index("DateTime").resample("H").agg({"MW": "sum", "Capacity": "sum"})
 
 df['MW'] = df['MW']/df['Capacity']
-df['MW'] = df['MW'].round(3)
+df['MW'] = df['MW'].round(10)
 
 # remove capacity column
 df = df.drop(columns=['Capacity'])
@@ -39,16 +39,16 @@ df['Time_cos'] = np.cos(2 * np.pi * df['Time_fraction'] )
 
 df.drop(columns=['Time_fraction'], inplace=True)
 
-df['Time_sin'] = df['Time_sin'].round(3)
-df['Time_cos'] = df['Time_cos'].round(3)
+df['Time_sin'] = df['Time_sin'].round(10)
+df['Time_cos'] = df['Time_cos'].round(10)
 
 # Day of Year (Cyclic)
 day_of_year = df['DateTime'].dt.dayofyear
 df['Day_sin'] = np.sin(2 * np.pi * day_of_year / 365)
 df['Day_cos'] = np.cos(2 * np.pi * day_of_year / 365)
 
-df['Day_sin'] = df['Day_sin'].round(3)
-df['Day_cos'] = df['Day_cos'].round(3)
+df['Day_sin'] = df['Day_sin'].round(10)
+df['Day_cos'] = df['Day_cos'].round(10)
 
 
 # shift the MW column up 1 day and record in the new column

@@ -1,0 +1,2 @@
+FLOPs: 53120.0
+Parameters: 52106.0
