@@ -1,0 +1,64 @@
+<mxfile host="Electron" modified="2025-02-09T06:08:18.620Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.13 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="svRxsGGGeZnkyq3lvpQ0" version="24.4.13" type="device">
+  <diagram name="Page-1" id="KbPgO2n8Sodh1RrQh4__">
+    <mxGraphModel dx="989" dy="577" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-10" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=#cce5ff;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="280" y="140" width="230" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-1" value="Cyclic features" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="351" y="150" width="60" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-2" value="Time series features" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="351" y="230" width="60" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-7" value="Proposed&lt;div&gt;Model&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffcc99;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="430" y="150" width="70" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-12" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.989;exitY=0.203;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="500.0000000000001" y="184.43499999999995" as="sourcePoint" />
+            <mxPoint x="530" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-13" value="Day-ahead Forecasting" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="529.1" y="177.5" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-15" value="Proposed Framework" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="400" y="120" width="120" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-16" value="Data preprocessing" style="rounded=0;whiteSpace=wrap;html=1;rotation=-90;fillColor=#ffcccc;strokeColor=#36393d;" vertex="1" parent="1">
+          <mxGeometry x="237.5" y="207.5" width="150" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-17" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="331" y="184.66" as="sourcePoint" />
+            <mxPoint x="350" y="185" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="270" y="225" as="sourcePoint" />
+            <mxPoint x="293.1" y="225.22" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-22" value="Historical data" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="218" y="214.5" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-23" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="331" y="265.15999999999997" as="sourcePoint" />
+            <mxPoint x="350" y="265.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1ZjH_zAIfYlVqaQO5qFT-27" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="411" y="186.66" as="sourcePoint" />
+            <mxPoint x="430" y="187" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
