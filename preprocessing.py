@@ -23,15 +23,15 @@ df['MW'] = df['MW'].round(10)
 df = df.drop(columns=['Capacity'])
 # df['Capacity'] = df['Capacity'].round(3)
 
-# Filter data between 8 AM and 4 PM (inclusive of 8 AM, exclusive of 5 PM)
-df = df.between_time("08:00", "17:00")  # Correct time range for filtering
+# Filter data between 8 AM and 6 PM (inclusive of 8 AM, exclusive of 5 PM)
+df = df.between_time("08:00", "18:00")  # Correct time range for filtering
 
 # Reset the index if you need 'DateTime' as a regular column
 df = df.reset_index()
 
-# Filter data between 8 AM and 5 PM
+# Filter data between 8 AM and 6 PM
 hour_feature = df["DateTime"].dt.hour
-df['Time_fraction'] = (hour_feature- 8) / 9
+df['Time_fraction'] = (hour_feature- 8) / 10
 
 # Feature Engineering (Cyclic Time of Day)
 df['Time_sin'] = np.sin(2 * np.pi * df['Time_fraction'] )

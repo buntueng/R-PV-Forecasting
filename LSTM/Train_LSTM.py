@@ -18,7 +18,7 @@ def load_and_preprocess_data(data_dir, filename, sequence_length):
 
     df['DateTime'] = pd.to_datetime(df['DateTime'])
     df['Hour'] = df['DateTime'].dt.hour
-    df = df[(df['Hour'] >= 8) & (df['Hour'] <= 17)]
+    df = df[(df['Hour'] >= 8) & (df['Hour'] <= 18)]
 
     input_features = ['MW', 'Time_sin', 'Time_cos', 'Day_sin', 'Day_cos']
     output_feature = 'MW_NextDay'
@@ -29,7 +29,7 @@ def load_and_preprocess_data(data_dir, filename, sequence_length):
     for date, values in daily_data.items():
         reshaped_daily_data[date] = {}
         reshaped_daily_data[date]['X'] = values[:,:-1]
-        reshaped_daily_data[date]['y'] = values[:, -1].reshape(10)
+        reshaped_daily_data[date]['y'] = values[:, -1].reshape(11)
 
     train_dates = [date for date in reshaped_daily_data if date.year < 2018]
     test_dates = [date for date in reshaped_daily_data if date.year == 2018]
@@ -42,9 +42,9 @@ def load_and_preprocess_data(data_dir, filename, sequence_length):
 
     def create_sequences(X, y, seq_length):
         Xs, ys = [], []
-        for i in range(len(X) - seq_length):
+        for i in range(len(X) - seq_length + 1):  # Change here: Add + 1
             Xs.append(X[i:i + seq_length])
-            ys.append(y[i + seq_length])
+            ys.append(y[i + seq_length - 1])  # Change here: Subtract 1
         return np.array(Xs), np.array(ys)
 
     sequence_length = 1
@@ -55,9 +55,30 @@ def load_and_preprocess_data(data_dir, filename, sequence_length):
     y_train_tensor = torch.tensor(y_train_seq, dtype=torch.float32)
     X_test_tensor = torch.tensor(X_test_seq, dtype=torch.float32)
     y_test_tensor = torch.tensor(y_test_seq, dtype=torch.float32)
+    
 
     return X_train_tensor, y_train_tensor, X_test_tensor, y_test_tensor
 
+def calculate_smape(y_true, y_pred):
+    """
+    Calculates Symmetric Mean Absolute Percentage Error (sMAPE).
+
+    Args:
+        y_true: Ground truth array (NumPy).
+        y_pred: Predicted array (NumPy).
+
+    Returns:
+        sMAPE as a float. Returns NaN if both y_true and y_pred are 0.
+    """
+
+    numerator = np.abs(y_true - y_pred)
+    denominator = (np.abs(y_true) + np.abs(y_pred)) / 2
+    
+    # Handle the case where BOTH y_true and y_pred are zero.
+    with np.errstate(divide='ignore', invalid='ignore'):  # Suppress warnings
+        smape = np.nanmean(numerator / denominator) * 100
+    
+    return smape
 
 # LSTM Model definition
 class LSTMModel(nn.Module):
@@ -131,7 +152,8 @@ def evaluate_model(model, X_test, y_test, device):
     rmse = np.sqrt(mse)
     mae = mean_absolute_error(y_test, predictions)
     r2 = r2_score(y_test, predictions)
-    return mse, rmse, mae, r2, predictions
+    smape = calculate_smape(y_test, predictions)
+    return mse, rmse, mae, r2, smape, predictions
 
 
 # Main execution (Part 1 - Everything before the actual training)
@@ -151,6 +173,7 @@ if __name__ == "__main__":
     if os.path.exists(predictions_file):
         os.remove(predictions_file)
         
+        
     if os.path.exists(parameters_file):
         os.remove(parameters_file)
     
@@ -162,8 +185,8 @@ if __name__ == "__main__":
     input_dimension = 5  # Number of input features
     hidden_dimension = 64
     number_of_layers = 2
-    output_dimension = 10  # Number of output values (10 hours)
-    num_epochs = 300
+    output_dimension = 11  # Number of output values (10 hours)
+    num_epochs = 5
     learning_rate = 0.001
 
     X_train_tensor, y_train_tensor, X_test_tensor, y_test_tensor = load_and_preprocess_data(
@@ -202,16 +225,20 @@ if __name__ == "__main__":
     torch.save(model.state_dict(), model_file)
 
     # Evaluate the model
-    mse, rmse, mae, r2, predictions = evaluate_model(model, X_test_tensor, y_test_tensor, device)
+    mse, rmse, mae, r2, smape, predictions = evaluate_model(model, X_test_tensor, y_test_tensor, device)
     print(f"MSE: {mse}")
     print(f"RMSE: {rmse}")
     print(f"MAE: {mae}")
     print(f"R-squared: {r2}")
+    print(f"sMAPE: {smape}")
     
-    
-    # Save predictions (optional)
-    # predictions_df = pd.DataFrame(predictions, columns=[f"Hour_{i+8}" for i in range(10)])  # Assuming hours 8-17
-    # predictions_df.to_csv(predictions_file, index=False)
+    # save the evaluation metrics to a file parameters.txt
+    with open(parameters_file, "a+") as f:
+        f.write(f"MSE: {mse}\n")
+        f.write(f"RMSE: {rmse}\n")
+        f.write(f"MAE: {mae}\n")
+        f.write(f"R-squared: {r2}\n")
+        f.write(f"sMAPE: {smape}\n")
     
     # load dataset in dataframe
     df = pd.read_csv(os.path.join(data_directory, file_name), parse_dates=['DateTime'],usecols=['DateTime','MW'])
@@ -221,11 +248,6 @@ if __name__ == "__main__":
     # rename columns
     df_2018.columns = ['DateTime', 'MW_actual']
 
-    # # Add a new column for predictions (initialized to NaN)
-    # df_2018["MW_predict"] = float("nan")
-    
-    # add the last dummy row to fill the predictions of the last day
-    predictions = np.append(predictions, [0,0,0,0,0,0,0,0,0,0])
     predictions = predictions.flatten()
     # # Add the predictions to the DataFrame
     df_2018["MW_predict"] = predictions
